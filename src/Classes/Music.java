@@ -7,7 +7,7 @@ public class Music {
     private String title;
     private User singer;
     private int numberOfStream = 0;
-    static ArrayList<Music> allMusics = new ArrayList<>();
+    private static ArrayList<Music> allMusics = new ArrayList<>();
 
     public Music (String title, User singer) {
         this.title = title;
@@ -20,7 +20,12 @@ public class Music {
         numberOfStream ++;
     }
 
-    public ArrayList<Music> search (String title) throws InvalidOperationException{
+
+
+    public static ArrayList<Music> search(String title) throws InvalidOperationException{
+        if (title == null || title.trim().isEmpty()) {
+            throw new InvalidOperationException("Search for bigin need title");
+        }
         ArrayList<Music> result = new ArrayList<>();
         for (Music music : allMusics) {
             if (music.getTitle().equals(title)) {
@@ -35,7 +40,10 @@ public class Music {
         }
     }
 
-    public Music search (String title, User singer) throws InvalidOperationException{
+    public static Music search(String title, User singer) throws InvalidOperationException{
+        if (title == null || title.trim().isEmpty()) {
+            throw new InvalidOperationException("Title of song cant be empty.");
+        }
         for (Music music : allMusics) {
             if (music.getTitle().equals(title) && music.getSinger().equals(singer)) {
                 return music;
@@ -46,6 +54,10 @@ public class Music {
 
     public String getTitle () {
         return title;
+    }
+
+    public static ArrayList<Music> getAllMusics () {
+        return allMusics;
     }
 
     public User getSinger () {

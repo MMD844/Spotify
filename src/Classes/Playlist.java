@@ -12,9 +12,13 @@ public class Playlist {
     public Playlist(String title, User owner) {
         this.title = title;
         this.owner = owner;
+        owner.getPlayLists().add(this);
     }
 
     public ArrayList<Music> searchInPlaylist (String title) throws InvalidOperationException{
+        if (title == null || title.trim().isEmpty()){
+            throw new InvalidOperationException("Title cant be null.");
+        }
         ArrayList<Music> result = new ArrayList<>();
         for (Music music : playlist) {
             if (music.getTitle().equals(title)) {
@@ -29,7 +33,10 @@ public class Playlist {
         }
     }
 
-    Music searchInPlaylist (String title, String singer) throws InvalidOperationException{
+    public Music searchInPlaylist (String title, User singer) throws InvalidOperationException{
+        if (title == null|| title.trim().isEmpty() || singer == null) {
+            throw new InvalidOperationException("Title or Singeruser cant be null. ");
+        }
         for (Music music : playlist) {
             if (music.getTitle().equals(title) && music.getSinger().equals(singer)) {
                 return music;
@@ -49,14 +56,14 @@ public class Playlist {
         }
     }
 
-    public void editTitle (String newTitle, int password) throws InvalidOperationException {
+    public void editTitle (String newTitle, String password) throws InvalidOperationException {
         if (!owner.getPassword().equals(password)) {
             throw new InvalidOperationException("Invalid password");
         }
         this.title = newTitle;
     }
 
-    void addMusic (Music music, int password) throws InvalidOperationException{
+    public void addMusic (Music music, String password) throws InvalidOperationException{
         if (!owner.getPassword().equals(password)) {
             throw new InvalidOperationException("Invalid password");
         }
@@ -66,7 +73,7 @@ public class Playlist {
         playlist.add(music);
     }
 
-    void removeMusic (Music music, int password) throws InvalidOperationException {
+    public void removeMusic (Music music, String password) throws InvalidOperationException {
         if (!owner.getPassword().equals(password)) {
             throw new InvalidOperationException("Invalid password");
         }
@@ -75,4 +82,23 @@ public class Playlist {
         }
     }
 
+    public String getTitle () {
+        return title;
+    }
+
+    public void setTitle (String title) {
+        this.title = title;
+    }
+
+    public User getOwner () {
+        return owner;
+    }
+
+    public void setOwner (User owner) {
+        this.owner = owner;
+    }
+
+    public ArrayList<Music> getPlaylist () {
+        return playlist;
+    }
 }
