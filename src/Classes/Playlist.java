@@ -4,8 +4,14 @@ import java.util.ArrayList;
 
 public class Playlist {
 
+    private String title;
     ArrayList<Music> playlist = new ArrayList<>();
     User owner;
+
+    public Playlist(String title, User owner) {
+        this.title = title;
+        this.owner = owner;
+    }
 
     Music search (String title){
         return null;
